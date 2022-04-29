@@ -2,7 +2,7 @@
 
   <div>
 
-    <h1 v-bind="sayHello()" > Ceci est notre message {{message}} </h1>
+    <h1> {{message}} </h1>
 
   </div>
 
@@ -18,22 +18,16 @@ export default {
 
   data() {
     return {
-      message: String
+      message: "This is a message from the localhost"
     }
   },
 
-  methods: {
+  async created(){
 
-    async sayHello() {
+    const response = await axios.get('http://localhost:8080/api/hello')
+    this.message = response.data.message
 
-      const res = await axios.get('http://localhost:3000/api/hello')
-
-      console.log(res)
-
-      this.message = res.data.message
-
-    }
-  }
+  } 
 
 }
 </script>
