@@ -4,8 +4,10 @@
   "description": "vue express projet ",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
-    "dev" : "nodemon server/index.js"
+    "server": "cd server && nodemon start",
+    "client" : "cd client && npm run serve",
+    "start" : "concurrently \"npm run server\" \"npm run client\""
+    
   },
   "repository": {
     "type": "git",

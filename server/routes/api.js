@@ -5,8 +5,14 @@ const router = express.Router();
 //GET
 
 router.get('/', (req, res) => {
-    res.send('Hello World from API');
+    res.json({ message: 'Hello World from API test' });
 });
+
+router.get('/hello', (req, res) => {
+    res.json({ message: 'This is a Hello World from your API rest by using axios' });
+});
+
+
 
 
 

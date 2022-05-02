@@ -2,18 +2,25 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-const api = require('./routes/api');
+const apirest = require('./routes/api.js');
 
-app.use(bodyParser.json());
+
+
+
 app.use(cors());
-app.use('/api', api);
+app.use('/api', apirest);
+app.use(bodyParser.json());
+
+
+
 
 app.get('/', (req, res) => {
-    res.send('Hello World from Index');
+    res.send('This is the backend of the project');
 });
 
 
