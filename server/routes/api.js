@@ -12,8 +12,9 @@ router.get('/hello', (req, res) => {
     res.json({ message: 'This is a Hello World from your API rest by using axios' });
 });
 
-router.post('/login/:pseudo/:pass', (req, res) => {
-    res.json({ message: `Here are the parameter : ${req.params.pseudo} ${req.params.pass}` });
+router.post('/login', (req, res) => {
+    res.json({ message: `Here are the parameter : ${req.query.name} ${req.query.pass}` });
+    
 });
 
 
