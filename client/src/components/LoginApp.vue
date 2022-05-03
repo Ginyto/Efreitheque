@@ -31,7 +31,7 @@
       </div>
 
       <div id="sub">
-      <p>Don't have an acount ?</p> <p id="create" v-on:click="swap()" >Create one</p>
+        <p>Don't have an acount ?</p> <p id="create" v-on:click="swap()" >Create one</p>
       </div>
 
     </div>
