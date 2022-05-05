@@ -1,8 +1,16 @@
 <template>
 
-  <div id="book">
+  
 
-    <img :src="couverture">
+  <div id="book" @click="add()">
+
+    <div id="photo">
+
+      <div id="added" v-show="adding"> Added !</div>
+
+      <img :src="couverture">
+
+    </div>
 
     <div id="soustitre">
 
@@ -45,8 +53,10 @@ export default {
       auteur : String,
       couverture : String,
       quantite : Number,
-      state : ['✅', '❌']
+      state : ['✅', '❌'],
+      adding : false
     }
+    
   },
 
   methods: {
@@ -62,7 +72,18 @@ export default {
       this.quantite = this.book.quantite;
 
 
-    }
+    },
+
+    add() {
+      if (this.quantite > 0) {
+        this.adding = true;
+      }
+
+      else {
+        alert("Out of stock !");
+      }
+
+    },
 
   },
 
@@ -89,11 +110,20 @@ export default {
 
 <style scoped>
 
+#added{
+  color: black;
+  font-size: 1.5rem;
+  background: linear-gradient(to left, #11998e, #38ef7d);
+  border: #2b2b31 solid 1px;
+  position: absolute;
+  width: 300px;
+  /* z-index: 2; */
+}
+
 #book{
   background-color: #2b2b31;
   width: 300px;
   height: fit-content;
-  
 }
 
 #book:hover{
@@ -104,10 +134,10 @@ export default {
 }
 
 
-
 img{
   width: 300px;
   height: 461px;
+  /* z-index: 1; */
 }
 
 #soustitre{
