@@ -1,6 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
+const sequelize = require('../sequelize')
+
+const { Livre } = require('../sequelize')
+
+sequelize.syncDB()
+
+
+
+
 
 //GET
 
@@ -15,6 +24,25 @@ router.get('/hello', (req, res) => {
 router.post('/login', (req, res) => {
     res.json({ message: `Here are the parameter : ${req.query.name} ${req.query.pass}` });
     
+});
+
+router.get('/book', (req, res) => {
+
+    Livre.findAll().then(livres => {
+
+        res.json({ livres });
+        
+    })
+});
+
+router.get('/book/:id', (req, res) => {
+
+    const id = req.params.id;
+
+    Livre.findByPk(id).then(livres => {
+
+        res.json({ livres });
+    })
 });
 
 
