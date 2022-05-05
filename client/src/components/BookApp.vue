@@ -11,9 +11,9 @@
       <div id="soussous">
 
         {{ auteur }}
-        Remaining : {{ quantite }}
 
-        
+        Remaining : {{ stock }} 
+
 
       </div>
 
@@ -39,17 +39,19 @@ export default {
   },
 
   data() {
+
     return {
       titre : String,
       auteur : String,
       couverture : String,
       quantite : Number,
+      state : ['✅', '❌']
     }
   },
 
   methods: {
 
-    async fetchData() {
+    fetchData() {
 
       // console.log(this.book);
       
@@ -60,8 +62,19 @@ export default {
       this.quantite = this.book.quantite;
 
 
-    },
+    }
 
+  },
+
+  computed: {
+    stock() {
+
+      if (this.quantite > 0) {
+        return this.quantite + ' ' + this.state[0];
+      } else {
+        return this.quantite + ' ' + this.state[1];
+      }
+    }
   },
 
   created() {
@@ -79,7 +92,7 @@ export default {
 #book{
   background-color: #2b2b31;
   width: 300px;
-  height: 511px;
+  height: fit-content;
   
 }
 

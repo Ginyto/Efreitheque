@@ -1,17 +1,10 @@
 <template>
 
-  <nav>
-  
-    <router-link to="/catalog">Catalog</router-link> ||
-    <router-link to="/bag">Bag</router-link>
-
-  </nav>
-
-  <router-view/>
-
   <div class="bookzone">
 
     <h1>Catalog</h1>
+
+    
 
     <div id="etagere">
 
@@ -40,10 +33,11 @@ const axios = require('axios');
 
 import BookApp from "../components/BookApp.vue"
 
+
 export default {
 
   components: {
-    BookApp
+    BookApp,
 },
 
   data() {
@@ -75,6 +69,7 @@ export default {
 
 
 <style scoped>
+
 
 #etagere{
   display: flex;
