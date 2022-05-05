@@ -2,17 +2,18 @@
 
   <div id="book">
 
-    <img :src="couverture" :alt="titre">
+    <img :src="couverture">
 
     <div id="soustitre">
 
-      <p>{{ titre }}</p>
+      {{ titre }}
 
       <div id="soussous">
 
-        <p>{{ auteur }}</p>
+        {{ auteur }}
+        Remaining : {{ quantite }}
 
-        <p>Remaining : {{ quantite }}</p>
+        
 
       </div>
 
@@ -24,18 +25,15 @@
 
 <script>
 
-const axios = require('axios');
-
 
 export default {
 
   props: {
 
-    bookId: {
-      type: Number,
+    book: {
+      type: Object,
       required: true
-  
-    },
+    }
 
 
   },
@@ -53,17 +51,14 @@ export default {
 
     async fetchData() {
 
-      const response = await axios.get(`http://localhost:3000/api/book/${this.bookId}`);
-
-      // console.log(response.data.livres.titre);
+      // console.log(this.book);
       
 
-      this.titre = response.data.livres.titre;
-      this.auteur = response.data.livres.auteur;
-      this.couverture = response.data.livres.couverture;
-      this.quantite = response.data.livres.quantite;
+      this.titre = this.book.titre;
+      this.auteur = this.book.auteur;
+      this.couverture = this.book.couverture;
+      this.quantite = this.book.quantite;
 
-      
 
     },
 
@@ -82,24 +77,38 @@ export default {
 <style scoped>
 
 #book{
-  /* background-color: #f5f5f5; */
-  width: fit-content;
+  background-color: #2b2b31;
+  width: 300px;
+  height: 511px;
+  
 }
 
+#book:hover{
+  background-color: #2b2b31;
+  width: 300px;
+  height: 511px;
+  box-shadow: inset 0 0 1em gold, 0 0 2em red;
+}
+
+
+
 img{
-  width: 250px;
+  width: 300px;
+  height: 461px;
 }
 
 #soustitre{
   display: flex;
-  /* background-color: burlywood; */
+  background-color: #2b2b31;
   flex-direction: column;
   flex-wrap: wrap;
 }
 
 #soussous{
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #2b2b31;
 }
 
 

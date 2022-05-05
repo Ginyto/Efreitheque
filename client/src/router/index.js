@@ -10,9 +10,9 @@ const routes = [
   },
 
   {
-    path: '/book',
-    name: 'book',
-    component: () => import('../views/BookView.vue')
+    path: '/catalog',
+    name: 'Catalog',
+    component: () => import('../views/CatalogView.vue')
   }
 ]
 

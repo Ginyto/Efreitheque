@@ -5,7 +5,7 @@ const sequelize = require('../sequelize')
 
 const { Livre } = require('../sequelize')
 
-sequelize.syncDB()
+// sequelize.syncDB()
 
 
 
