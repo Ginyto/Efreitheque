@@ -76,7 +76,7 @@ export default {
 
     add() {
       if (this.quantite > 0) {
-        this.adding = true;
+        this.adding = !this.adding;
       }
 
       else {
