@@ -1,7 +1,10 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
 //Importing the models
-const LivreModel = require('./models/Livre'); 
+const LivreModel = require('./models/Livre');
+const UserModel = require('./models/User');
+const PanierModel = require('./models/Panier');
+
 
 
 //BDD
@@ -24,12 +27,14 @@ try {
 
 //Creating the models and syncing them with the database
 const Livre = LivreModel(sequelize, DataTypes);
+const User = UserModel(sequelize, DataTypes);
+const Panier = PanierModel(sequelize, DataTypes);
 
 
 
 const syncDB = () => {
 
-    return sequelize.sync({ force: true }).then(() => {
+    return sequelize.sync({ force: false }).then(() => {
 
     console.log('Livres has been synced successfully');
 
@@ -81,7 +86,7 @@ const syncDB = () => {
 }
 
 module.exports = {
-    syncDB, Livre
+    syncDB, Livre, User, Panier
 }
 
 

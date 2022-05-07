@@ -12,9 +12,13 @@
 
 
 <style>
+
 * {
   background-color: #303037;
   color: #F1F1F1;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 #app {
