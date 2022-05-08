@@ -1,6 +1,5 @@
 <template>
 
-  
 
   <div id="book" @click="add()">
 
@@ -77,6 +76,14 @@ export default {
     add() {
       if (this.quantite > 0) {
         this.adding = !this.adding;
+
+        if (this.adding) {
+          this.$emit('addbook', this.book);
+        }
+
+        else {
+          this.$emit('removebook', this.book);
+        }
       }
 
       else {

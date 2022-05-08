@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const sequelize = require('../sequelize')
+const { Op } = require("sequelize");
 
 const { Livre } = require('../sequelize')
 const { User } = require('../sequelize')
@@ -42,6 +43,23 @@ router.get('/book/:id', (req, res) => {
     const id = req.params.id;
 
     Livre.findByPk(id).then(livres => {
+
+        res.json({ livres });
+    })
+});
+
+router.get('/lookingfor/:target', (req, res) => {
+    const target = req.params.target;
+
+    Livre.findAll(
+        {
+            where: {
+                titre: {
+                    [Op.like]: `%${target}%`
+                }
+            }
+        }
+    ).then(livres => {
 
         res.json({ livres });
     })
