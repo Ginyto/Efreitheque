@@ -38,6 +38,15 @@ router.get('/book', (req, res) => {
     })
 });
 
+router.get('/cart', (req, res) => {
+
+    Panier.findAll().then(paniers => {
+
+        res.json({ paniers });
+        
+    })
+});
+
 router.get('/book/:id', (req, res) => {
 
     const id = req.params.id;
@@ -64,6 +73,43 @@ router.get('/lookingfor/:target', (req, res) => {
         res.json({ livres });
     })
 });
+
+
+//POST
+
+router.post('/:user/:idbook', (req, res) => {
+    const user = req.params.user;
+    const idbook = req.params.idbook;
+
+    Panier.create({
+
+        id_user: user,
+        id_livre: idbook
+
+    }).then(livre => {
+        res.json({ livre });
+    })
+        .catch(err => {
+        res.json({ err });
+    })
+});
+
+
+//Delete
+router.delete('/:user/:idbook', (req, res) => {
+    const user = req.params.user;
+    const idbook = req.params.idbook;
+
+    Panier.destroy({
+        where: {
+            id_user: user,
+            id_livre: idbook
+        }
+    }).then(livre => {
+        res.json({ livre });
+    })
+
+})
 
 
 

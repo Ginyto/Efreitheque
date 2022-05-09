@@ -1,22 +1,11 @@
 <template>
 
-  <div class="bookzone">
-
-    <div id="header">
-
-      <div id="bar">
-        <input type="text" id="looking" placeholder="Looking for a Superhero ?" @keyup="looking($event)">
-        <div class="line"></div>
-      </div>
-
-    </div>
-
-    
+  <div class="bookzone">    
 
     <div id="etagere">
 
       <div id="fail" v-show="notfound">
-        <p>No results found</p>
+        <p>No books borrow yet</p>
         <img :src="deadpool" id="deadpoolpic">
       </div>
 
@@ -74,10 +63,33 @@ export default {
 
   methods: {
 
-    async fetchData() {
-      const response = await axios.get(`http://localhost:3000/api/book`);
+    async fetchPanier() {
 
-      this.bibli = response.data.livres;
+      const response = await axios.get(`http://localhost:3000/api/cart`);
+
+      this.panier = response.data.paniers;
+
+      console.log(this.panier);
+      console.log("--->",this.panier.length);
+
+      if (this.panier.length === 0) {
+        this.notfound = true;
+      }
+
+      else {
+        this.notfound = false;
+
+        for (let index = 0; index < this.panier.length; index++) {
+          const element = this.panier[index];
+
+          const response = await axios.get(`http://localhost:3000/api/book/${element.id_livre}`);
+
+          this.bibli.push(response.data.livres);
+
+          console.log("here", this.bibli);
+        }
+
+      }
 
     },
 
@@ -94,40 +106,16 @@ export default {
 
       this.panier.splice(this.panier.indexOf(book), 1);
       axios.delete(`http://localhost:3000/api/${id_user}/${book.id}`);
+      this.fetchPanier();
       console.log(`${book.titre} retiré du panier`);
-    },
-
-    looking(event) {
-      console.log(event.target.value);
-
-      const search = event.target.value;
-
-      if (search.length > 2) {
-        
-        axios.get(`http://localhost:3000/api/lookingfor/${search}`)
-
-        .then(response => {
-          this.bibli = response.data.livres;
-          
-          if (this.bibli.length === 0) {
-            this.notfound = true;
-          }
-
-        })
-      }
-
-      else {
-        this.notfound = false;
-        this.fetchData();
-      }
-
+      console.log("test bibli",this.bibli);
     }
 
   },
 
   created() {
-    this.fetchData();
-  },
+    this.fetchPanier();
+  }
 
 }
 
