@@ -94,6 +94,31 @@ router.post('/:user/:idbook', (req, res) => {
     })
 });
 
+router.post('/update/:user/:idbook/:qte', (req, res) => {
+    const user = req.params.user;
+    const idbook = req.params.idbook;
+    const qte = req.params.qte - 1;
+
+    Livre.update({
+        
+        quantite: qte
+    },
+    
+        {
+            where: {
+                id: idbook
+            }
+        }
+
+    ).then(livre => {
+        res.json({ livre });
+    }
+    ).catch(err => {
+        res.json({ err });
+    })
+
+});
+
 
 //Delete
 router.delete('/:user/:idbook', (req, res) => {

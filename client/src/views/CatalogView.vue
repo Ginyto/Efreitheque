@@ -16,7 +16,7 @@
     <div id="etagere">
 
       <div id="fail" v-show="notfound">
-        <p>No results found</p>
+        <p>No results found</p> <br>
         <img :src="deadpool" id="deadpoolpic">
       </div>
 
@@ -121,7 +121,9 @@ export default {
         this.fetchData();
       }
 
-    }
+    },
+
+    
 
   },
 

@@ -1,7 +1,7 @@
 <template>
 
 
-  <div id="book" @click="add()">
+  <div id="books" @click="add()">
 
     <div id="photo">
 
@@ -40,6 +40,11 @@ export default {
     book: {
       type: Object,
       required: true
+    },
+
+    isadded : {
+      type : Boolean,
+      required : false
     }
 
 
@@ -92,6 +97,12 @@ export default {
 
     },
 
+    isitadded() {
+      if (this.isadded) {
+        this.adding = true;
+      }
+    }
+
   },
 
   computed: {
@@ -107,6 +118,7 @@ export default {
 
   created() {
     this.fetchData();
+    this.isitadded();
   },
 
 }
@@ -127,16 +139,16 @@ export default {
   /* z-index: 2; */
 }
 
-#book{
+#books{
   background-color: #2b2b31;
   width: 300px;
   height: fit-content;
 }
 
-#book:hover{
+#books:hover{
   background-color: #2b2b31;
   width: 300px;
-  height: 511px;
+  
   box-shadow: inset 0 0 1em gold, 0 0 2em red;
 }
 
@@ -152,6 +164,7 @@ img{
   background-color: #2b2b31;
   flex-direction: column;
   flex-wrap: wrap;
+  height: fit-content;
 }
 
 #soussous{
@@ -160,9 +173,5 @@ img{
   flex-wrap: wrap;
   background-color: #2b2b31;
 }
-
-
-
-
 
 </style>

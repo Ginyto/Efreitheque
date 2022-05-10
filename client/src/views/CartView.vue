@@ -1,19 +1,25 @@
 <template>
 
-  <div class="bookzone">    
+  <div id="emprunt" v-show="plenty">
+    <h1>What we got here ?</h1>
+
+    <button id="buttonf" @click="borrow()"> Borrow of all them </button>
+  </div>
+
+  <div class="bookzone">
 
     <div id="etagere">
 
       <div id="fail" v-show="notfound">
-        <p>No books borrow yet</p>
+        <p>No books borrow yet</p> <br>
         <img :src="deadpool" id="deadpoolpic">
       </div>
 
-      <div v-for="item in bibli" :key="item.id">
+      <div v-for="item in bibli" :key="item.id" id="book">
 
-        <div class="book">
-          <BookApp :book="item" @addbook = "addToCart($event)" @removebook = "removeFromCart($event)" />
-        </div>
+        
+        <BookApp :book="item" @addbook = "addToCart($event)" @removebook = "removeFromCart($event)" :isadded ="true" />
+        
 
       </div>
 
@@ -55,7 +61,10 @@ export default {
 
       notfound : false,
 
-      deadpool : 'https://i.kym-cdn.com/photos/images/facebook/000/652/022/3d9.png'
+      deadpool : 'https://i.kym-cdn.com/photos/images/facebook/000/652/022/3d9.png',
+
+      plenty : false
+
 
     }
   },
@@ -106,9 +115,46 @@ export default {
 
       this.panier.splice(this.panier.indexOf(book), 1);
       axios.delete(`http://localhost:3000/api/${id_user}/${book.id}`);
+      this.bibli = []
       this.fetchPanier();
       console.log(`${book.titre} retiré du panier`);
       console.log("test bibli",this.bibli);
+    },
+
+    async borrow(){
+
+      const id_user = 1;
+
+      console.log(this.panier);
+
+      for (let index = 0; index < this.bibli.length; index++) {
+
+          const element = this.bibli[index];
+
+          await axios.post(`http://localhost:3000/api/update/${id_user}/${element.id}/${element.quantite}`);
+
+          console.log("borrowed", element.titre, element.quantite);
+
+          console.log(this.bibli)
+
+        }
+
+    }
+
+  },
+
+  watch: {
+
+    panier : function () {
+
+      if (this.panier.length > 0) {
+        this.plenty = true;
+      }
+
+      else {
+        this.plenty = false;
+      }
+
     }
 
   },
@@ -131,12 +177,19 @@ export default {
   margin: 0.2vh;
 }
 
-#header {
-  display: flex;
-  /* background-color : red; */
-  width: 100%;
-  justify-content: space-between;
-  padding-bottom: 5vh;
+#buttonf {
+  background: linear-gradient(to right, #8A2387, #E94057, #F27121);
+
+  
+  width: 20%;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  color: #fff;
+  padding: 1vh;
+  border-radius: 5px;
+  font-size: 2vh;
+  cursor: pointer;
+
 }
 
 #fail {
@@ -180,10 +233,9 @@ export default {
 #etagere{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
 }
 
-.book{
+#book{
   padding-bottom: 20px;
   width: fit-content;
 }
