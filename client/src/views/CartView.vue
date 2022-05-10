@@ -41,6 +41,8 @@ const axios = require('axios');
 
 import BookApp from "../components/BookApp.vue"
 
+import router from '../router/index.js'
+
 
 export default {
 
@@ -121,7 +123,7 @@ export default {
       console.log("test bibli",this.bibli);
     },
 
-    async borrow(){
+    borrow(){
 
       const id_user = 1;
 
@@ -131,13 +133,25 @@ export default {
 
           const element = this.bibli[index];
 
-          await axios.post(`http://localhost:3000/api/update/${id_user}/${element.id}/${element.quantite}`);
+          axios.post(`http://localhost:3000/api/update/${id_user}/${element.id}/${element.quantite}`);
 
           console.log("borrowed", element.titre, element.quantite);
 
           console.log(this.bibli)
 
+          axios.delete(`http://localhost:3000/api/${id_user}/${element.id}`);
+
+          
+
         }
+
+        
+        this.bibli = []
+        this.fetchPanier()
+
+        router.push('/catalog');
+      
+
 
     }
 
