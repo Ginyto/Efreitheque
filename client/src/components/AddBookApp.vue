@@ -4,11 +4,11 @@
 
     <div id="bookinput">
     
-      <input type="text" v-model= "book.titre" placeholder="Book name">
+      <input type="text" placeholder="Book name" @keyup="looking($event)">
       <div class="line"></div>
-      <input type="text" v-model= "book.auteur" placeholder="Author">
+      <input type="text"  placeholder="Author" @keyup="looking($event)">
       <div class="line"></div>
-      <input type="text" v-model= "book.couverture" placeholder="URL image">
+      <input type="text" placeholder="URL image" @keyup="looking($event)">
       <div class="line"></div>
 
       <button class="buttonf" type="reset" @click="prebook" v-show="!previewing"> Preview </button> <br>
@@ -38,9 +38,9 @@ export default {
     data() {
         return {
             book: {
-                titre: "test",
-                auteur: "test",
-                couverture: "https://i.annihil.us/u/prod/marvel/i/mg/d/d0/62685178d7132/clean.jpg",
+                titre: String,
+                auteur: String,
+                couverture: String,
                 quantite: 5
             },
 
