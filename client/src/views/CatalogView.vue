@@ -14,7 +14,7 @@
     </div>
 
     <div id="zoneadd" v-show="admin">
-      <AddBookApp></AddBookApp>
+      <AddBookApp @majbook="hotreload()" ></AddBookApp>
     </div>
 
     
@@ -135,6 +135,13 @@ export default {
 
     devadmin() {
       this.admin = !this.admin;
+    },
+
+    async hotreload() {
+      console.log('hot reload');
+      this.bibli = [];
+      await this.fetchData();
+      
     }
 
     

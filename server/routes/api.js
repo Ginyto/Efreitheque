@@ -120,11 +120,14 @@ router.post('/update/:user/:idbook/:qte', (req, res) => {
 });
 
 
-router.post('/add/:titre/:auteur/:publication/:couverture', (req, res) => {
-    const titre = req.params.titre;
-    const auteur = req.params.auteur;
-    const publication = req.params.publication;
-    const couverture = req.params.couverture;
+router.post('/addbook', (req, res) => {
+    
+    const titre = req.query.titre;
+    const auteur = req.query.auteur;
+    const publication = req.query.publication;
+    const couverture = req.query.couverture;
+
+    
 
     Livre.create({
 
@@ -135,12 +138,12 @@ router.post('/add/:titre/:auteur/:publication/:couverture', (req, res) => {
         quantite: 5
         
     }).then(livre => {
-        res.json({ livre });
+        res.json({ livre, message: 'Livre ajouté' });
     }
     ).catch(err => {
         res.json({ err });
     })
-})
+});
 
 
 //Delete

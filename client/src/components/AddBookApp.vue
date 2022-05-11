@@ -4,21 +4,17 @@
 
     <div id="bookinput">
     
-      <input type="text" placeholder="Book name" @keyup="looking($event)">
+      <input type="text" v-model= "titre" placeholder="Book name">
       <div class="line"></div>
-      <input type="text"  placeholder="Author" @keyup="looking($event)">
+      <input type="text" v-model= "auteur" placeholder="Author">
       <div class="line"></div>
-      <input type="text" placeholder="URL image" @keyup="looking($event)">
+      <input type="text" v-model= "publication" placeholder="Publication">
+      <div class="line"></div>
+      <input type="text" v-model= "couverture" placeholder="URL image">
       <div class="line"></div>
 
-      <button class="buttonf" type="reset" @click="prebook" v-show="!previewing"> Preview </button> <br>
-      <button class="buttonf" type="reset" @click="addbook" v-show="previewing"> Addbook </button>
-
-    </div>
-
-    <div id="bookpreview" v-show="previewing">
-
-      <BookApp :book="book"/>
+      
+      <button class="buttonf" type="reset" @click="addbook" > Addbook </button>
 
     </div>
 
@@ -29,47 +25,81 @@
 </template>
 
 <script>
-import BookApp from './BookApp.vue';
+import axios from 'axios';
+
+
 
 
 export default {
+
     props: {},
 
     data() {
         return {
-            book: {
-                titre: String,
-                auteur: String,
-                couverture: String,
-                quantite: 5
-            },
+            
+            titre: '',
+            auteur: '',
+            publication: '',
+            couverture: '',
 
-            previewing : false
         };
     },
 
     methods: {
 
-      prebook() {
-        console.log(this.book.titre);
-        console.log(this.book.auteur);
-        console.log(this.book.couverture);
+        addbook() {
+          if (this.titre != '' && this.auteur != '' && this.publication != '' && this.couverture != '') {
 
-        this.previewing = true;
+            console.log(this.titre);
+            console.log(this.auteur);
+            console.log(this.publication);
+            console.log(this.couverture);
+            
+
+            this.previewing = true;
+
+            const res = axios.post(`http://localhost:3000/api/addbook`,{}, {
+              
+              params : {
+
+                titre: this.titre,
+                auteur: this.auteur,
+                publication: this.publication,
+                couverture: this.couverture,
+              }
+
+
+            });
+
+            console.log(res);
+
+            this.titre = '';
+            this.auteur = '';
+            this.publication = '';
+            this.couverture = '';
+
+
+            this.$emit('majbook');
+
+            alert('Book added');
+
+
+          }
+
+          else {
+            alert('Please fill all the fields');
+          }
+          
+        }
       },
 
-      addbook() {
-          console.log(this.book.titre);
-          console.log(this.book.auteur);
-          console.log(this.book.couverture);
-      },
-    },
+
 
     computed: {},
     watch: {},
     created() {
     },
-    components: { BookApp }
+
 }
 
 </script>
