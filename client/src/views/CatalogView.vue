@@ -9,6 +9,12 @@
         <div class="line"></div>
       </div>
 
+      <button @click="devadmin">admin mode</button>
+
+    </div>
+
+    <div id="zoneadd" v-show="admin">
+      <AddBookApp></AddBookApp>
     </div>
 
     
@@ -45,12 +51,14 @@ const axios = require('axios');
 
 
 import BookApp from "../components/BookApp.vue"
+import AddBookApp from "@/components/AddBookApp.vue";
 
 
 export default {
 
   components: {
     BookApp,
+    AddBookApp
 },
 
   data() {
@@ -66,7 +74,9 @@ export default {
 
       notfound : false,
 
-      deadpool : 'https://i.kym-cdn.com/photos/images/facebook/000/652/022/3d9.png'
+      deadpool : 'https://i.kym-cdn.com/photos/images/facebook/000/652/022/3d9.png',
+
+      admin : true,
 
     }
   },
@@ -123,6 +133,10 @@ export default {
 
     },
 
+    devadmin() {
+      this.admin = !this.admin;
+    }
+
     
 
   },
@@ -151,6 +165,15 @@ export default {
   width: 100%;
   justify-content: space-between;
   padding-bottom: 5vh;
+}
+
+#zoneadd {
+  width: 100%;
+  /* background-color: #F27121; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
 }
 
 #fail {
