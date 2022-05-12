@@ -9,7 +9,7 @@
         <div class="line"></div>
       </div>
 
-      <button @click="devadmin">admin mode</button>
+      <button v-show="administrator" id="adminmode" @click="devadmin">admin mode</button>
 
     </div>
 
@@ -75,6 +75,8 @@ export default {
       notfound : false,
 
       deadpool : 'https://i.kym-cdn.com/photos/images/facebook/000/652/022/3d9.png',
+
+      administrator : false,
 
       admin : false
 
@@ -248,6 +250,16 @@ export default {
 .book{
   padding-bottom: 20px;
   width: fit-content;
+}
+
+#adminmode{
+  background: linear-gradient(to right, #8A2387, #E94057, #F27121);
+  width: 15rem;
+  color: white;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
 }
 
 

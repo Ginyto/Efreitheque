@@ -6,7 +6,7 @@
 
     <br>
 
-    <h2 id="titre_login">LOG IN</h2>
+    <h2 id="titre_login">LOG IN</h2> <br>
 
 
 
@@ -30,8 +30,9 @@
         <button id="button_login" type="submit"> Log in </button>
       </div>
 
-      <div id="sub">
-        <p>Don't have an acount ?</p> <p id="create" v-on:click="swap()" >Create one</p>
+      <div id="sub"> <br>
+        <p>Don't have an acount ?</p> <br>
+        <p id="create" v-on:click="swap()" >Create one</p>
       </div>
 
     </div>
@@ -127,6 +128,7 @@ export default {
   background: linear-gradient(to left, #8A2387, #E94057, #F27121);
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  cursor: pointer;
 }
 
 

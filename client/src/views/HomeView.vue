@@ -54,6 +54,7 @@ export default {
   background: linear-gradient(to right, #8A2387, #E94057, #F27121);
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-bottom: 3rem;
 }
 
 </style>
