@@ -14,7 +14,7 @@
     </div>
 
     <div id="zoneadd" v-show="admin">
-      <AddBookApp @majbook="hotreload()" ></AddBookApp>
+      <AddBookApp @newbook ="newcomics($event)"></AddBookApp>
     </div>
 
     
@@ -29,7 +29,7 @@
       <div v-for="item in bibli" :key="item.id">
 
         <div class="book">
-          <BookApp :book="item" @addbook = "addToCart($event)" @removebook = "removeFromCart($event)" />
+          <BookApp :book="item" @addbook ="addToCart($event)" @removebook ="removeFromCart($event)" @delbook="delatebook($event)" :admin="admin"  />
         </div>
 
       </div>
@@ -76,7 +76,7 @@ export default {
 
       deadpool : 'https://i.kym-cdn.com/photos/images/facebook/000/652/022/3d9.png',
 
-      admin : true,
+      admin : false
 
     }
   },
@@ -94,6 +94,8 @@ export default {
     addToCart(book) {
       const id_user = 1;
 
+      console.log(book);
+
       this.panier.push(book);
       axios.post(`http://localhost:3000/api/${id_user}/${book.id}`);
       console.log(`${book.titre} ajouté au panier`);
@@ -105,6 +107,24 @@ export default {
       this.panier.splice(this.panier.indexOf(book), 1);
       axios.delete(`http://localhost:3000/api/${id_user}/${book.id}`);
       console.log(`${book.titre} retiré du panier`);
+    },
+
+    delatebook(book) {
+
+      this.bibli.splice(this.bibli.indexOf(book), 1);
+
+      console.log(book.id)
+      
+      axios.delete(`http://localhost:3000/api/deletebook`, {
+        
+        params : {
+          idbook : book.id
+        }
+      
+      });
+
+
+      console.log(`${book.titre} supprimé de la bibliothèque`);
     },
 
     looking(event) {
@@ -137,14 +157,12 @@ export default {
       this.admin = !this.admin;
     },
 
-    async hotreload() {
-      console.log('hot reload');
-      this.bibli = [];
-      await this.fetchData();
-      
-    }
+    newcomics(book){
 
-    
+      console.log("ceci est un test pour le book :" + book);
+
+      this.bibli.push(book);
+    }
 
   },
 

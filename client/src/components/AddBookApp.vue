@@ -32,15 +32,18 @@ import axios from 'axios';
 
 export default {
 
-    props: {},
+    props: {
+
+    },
 
     data() {
         return {
-            
+
             titre: '',
             auteur: '',
             publication: '',
             couverture: '',
+            quantite : 5
 
         };
     },
@@ -71,17 +74,25 @@ export default {
 
             });
 
-            console.log(res);
+            
+            console.log(res.then(res => {
+
+              alert(res.data.livre.titre + ' has been added');
+
+              console.log("j'envoie ce livre");
+              this.$emit('newbook',res.data.livre );
+  
+            }));
+            
+            
+
 
             this.titre = '';
             this.auteur = '';
             this.publication = '';
             this.couverture = '';
 
-
-            this.$emit('majbook');
-
-            alert('Book added');
+            
 
 
           }

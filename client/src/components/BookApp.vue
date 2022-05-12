@@ -26,11 +26,17 @@
 
     </div>
 
+    <div id="del" v-show="admin" @click = "delbook">
+      <button id="ate"> ⚠️ REMOVE ⚠️ </button>
+    </div>
+
   </div>
 
 </template>
 
 <script>
+
+
 
 
 export default {
@@ -45,7 +51,14 @@ export default {
     isadded : {
       type : Boolean,
       required : false
+    },
+
+    
+    admin : {
+      type : Boolean,
+      required : false
     }
+  
 
 
   },
@@ -58,7 +71,7 @@ export default {
       couverture : String,
       quantite : Number,
       state : ['✅', '❌'],
-      adding : false
+      adding : false,
     }
     
   },
@@ -79,20 +92,22 @@ export default {
     },
 
     add() {
-      if (this.quantite > 0) {
-        this.adding = !this.adding;
+      if (!this.admin) {
+        if (this.quantite > 0) {
+          this.adding = !this.adding;
 
-        if (this.adding) {
-          this.$emit('addbook', this.book);
+          if (this.adding) {
+            this.$emit('addbook', this.book);
+          }
+
+          else {
+            this.$emit('removebook', this.book);
+          }
         }
 
         else {
-          this.$emit('removebook', this.book);
+          alert("Out of stock !");
         }
-      }
-
-      else {
-        alert("Out of stock !");
       }
 
     },
@@ -101,6 +116,15 @@ export default {
       if (this.isadded) {
         this.adding = true;
       }
+    },
+
+    delbook(){
+
+      if (this.admin) {
+        this.$emit('delbook', this.book);
+      }
+
+      alert(this.book.titre + " has been deleted");
     }
 
   },
@@ -172,6 +196,25 @@ img{
   justify-content: center;
   flex-wrap: wrap;
   background-color: #2b2b31;
+}
+
+#del{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #2b2b31;
+}
+
+#ate{
+  background: linear-gradient(to right, #8A2387, #E94057, #F27121);
+  color: white;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  width: 80%;
+  cursor: pointer;
 }
 
 </style>

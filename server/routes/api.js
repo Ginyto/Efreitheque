@@ -8,7 +8,7 @@ const { Livre } = require('../sequelize')
 const { User } = require('../sequelize')
 const { Panier } = require('../sequelize')
 
-// sequelize.syncDB()
+//sequelize.syncDB()
 
 
 
@@ -121,7 +121,7 @@ router.post('/update/:user/:idbook/:qte', (req, res) => {
 
 
 router.post('/addbook', (req, res) => {
-    
+
     const titre = req.query.titre;
     const auteur = req.query.auteur;
     const publication = req.query.publication;
@@ -138,11 +138,15 @@ router.post('/addbook', (req, res) => {
         quantite: 5
         
     }).then(livre => {
+        
         res.json({ livre, message: 'Livre ajouté' });
     }
     ).catch(err => {
         res.json({ err });
     })
+
+
+
 });
 
 
@@ -158,6 +162,26 @@ router.delete('/:user/:idbook', (req, res) => {
         }
     }).then(livre => {
         res.json({ livre });
+    })
+
+})
+
+router.delete('/deletebook', (req, res) => {
+    const idbook = req.query.idbook;
+
+    console.log("this is a test ------------> ", idbook)
+
+    Livre.destroy({
+
+        where: {
+            id: idbook
+        }
+
+    }).then(livre => {
+        res.json({ livre });
+    }
+    ).catch(err => {
+        res.json({ err });
     })
 
 })

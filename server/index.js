@@ -12,6 +12,9 @@ const apirest = require('./routes/api.js');
 
 
 
+
+
+
 app.use(cors());
 app.use('/api', apirest);
 app.use(bodyParser.json());

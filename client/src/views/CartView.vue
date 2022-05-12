@@ -107,6 +107,8 @@ export default {
     addToCart(book) {
       const id_user = 1;
 
+      
+
       this.panier.push(book);
       axios.post(`http://localhost:3000/api/${id_user}/${book.id}`);
       console.log(`${book.titre} ajouté au panier`);
