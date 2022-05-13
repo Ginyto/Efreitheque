@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
 
         pseudo: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: {
+                msg: 'This pseudo is already used'
+            }
         },
 
         password: {

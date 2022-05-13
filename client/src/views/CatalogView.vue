@@ -4,6 +4,8 @@
 
     <div id="header">
 
+      <h1>Welcome {{session.username}} </h1>
+
       <div id="bar">
         <input type="text" id="looking" placeholder="Looking for a Superhero ?" @keyup="looking($event)">
         <div class="line"></div>
@@ -59,15 +61,10 @@ export default {
   components: {
     BookApp,
     AddBookApp
-},
+  },
 
   data() {
     return {
-
-      id_user : {
-        type : Number,
-        required : true
-      },
 
       bibli : [],
       panier : [],
@@ -78,7 +75,16 @@ export default {
 
       administrator : false,
 
-      admin : false
+      admin : false,
+
+      session : {
+
+        userid : 0,
+        username : '',
+        token : '',
+        admin : false
+
+      }
 
     }
   },
@@ -87,27 +93,31 @@ export default {
   methods: {
 
     async fetchData() {
-      const response = await axios.get(`http://localhost:3000/api/book`);
+      const response = await axios.get(`http://localhost:3000/api/book`, {
+        
+        headers: {
+          authorization: this.session.token
+        }})
+      
 
-      this.bibli = response.data.livres;
+      this.bibli = response.data.livres
 
     },
 
     addToCart(book) {
-      const id_user = 1;
+      
 
       console.log(book);
 
       this.panier.push(book);
-      axios.post(`http://localhost:3000/api/${id_user}/${book.id}`);
+      axios.post(`http://localhost:3000/api/${this.session.userid}/${book.id}`);
       console.log(`${book.titre} ajouté au panier`);
     },
 
     removeFromCart(book) {
-      const id_user = 1;
 
       this.panier.splice(this.panier.indexOf(book), 1);
-      axios.delete(`http://localhost:3000/api/${id_user}/${book.id}`);
+      axios.delete(`http://localhost:3000/api/${this.session.userid}/${book.id}`);
       console.log(`${book.titre} retiré du panier`);
     },
 
@@ -164,11 +174,23 @@ export default {
       console.log("ceci est un test pour le book :" + book);
 
       this.bibli.push(book);
+    },
+
+    syncSession(){
+      this.session.userid = sessionStorage.getItem('userid');
+      this.session.username = sessionStorage.getItem('username');
+      this.session.token = sessionStorage.getItem('token');
+      this.session.admin = sessionStorage.getItem('admin');
+
+      if (this.session.admin === 'true') {
+        this.administrator = true;
+      }
     }
 
   },
 
   created() {
+    this.syncSession();
     this.fetchData();
   },
 

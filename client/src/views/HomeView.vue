@@ -4,9 +4,7 @@
 
     <h1 id="titre">Efreitheque</h1>
 
-    <div v-show="already"> <LoginApp @switch = "swap"/> </div>
-
-    <div v-show="!already"> <SubApp @switch = "swap"/> </div>
+    <LoginApp/>
 
   </div>
 
@@ -16,7 +14,6 @@
 <script>
 
 import LoginApp from "../components/LoginApp.vue";
-import SubApp from "../components/SubApp.vue";
 
 
 
@@ -26,7 +23,6 @@ export default {
   
   components: {
     LoginApp,
-    SubApp
   },
 
   data() {
@@ -37,10 +33,6 @@ export default {
 
   methods : {
 
-    swap() {
-      console.log('I received an event from the child component')
-      this.already = !this.already
-    }
   }
 
 }
