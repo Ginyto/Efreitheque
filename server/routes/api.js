@@ -97,9 +97,15 @@ router.get('/book', auth, (req, res) => {
     })
 });
 
-router.get('/cart', (req, res) => {
+router.get('/cart/:iduser', (req, res) => {
 
-    Panier.findAll().then(paniers => {
+    const iduser = req.params.iduser
+
+    Panier.findAll({
+        where: {
+            id_user: iduser
+        }
+    }).then(paniers => {
 
         res.json({ paniers });
         

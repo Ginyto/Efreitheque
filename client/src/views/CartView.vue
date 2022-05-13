@@ -53,11 +53,6 @@ export default {
   data() {
     return {
 
-      id_user : {
-        type : Number,
-        required : true
-      },
-
       bibli : [],
       panier : [],
 
@@ -65,7 +60,16 @@ export default {
 
       deadpool : 'https://i.kym-cdn.com/photos/images/facebook/000/652/022/3d9.png',
 
-      plenty : false
+      plenty : false,
+
+      session : {
+
+        userid : 0,
+        username : '',
+        token : '',
+        admin : false
+
+      }
 
 
     }
@@ -76,7 +80,7 @@ export default {
 
     async fetchPanier() {
 
-      const response = await axios.get(`http://localhost:3000/api/cart`);
+      const response = await axios.get(`http://localhost:3000/api/cart/${this.session.userid}`);
 
       this.panier = response.data.paniers;
 
@@ -105,20 +109,18 @@ export default {
     },
 
     addToCart(book) {
-      const id_user = 1;
 
       
 
       this.panier.push(book);
-      axios.post(`http://localhost:3000/api/${id_user}/${book.id}`);
+      axios.post(`http://localhost:3000/api/${this.session.userid}/${book.id}`);
       console.log(`${book.titre} ajouté au panier`);
     },
 
     removeFromCart(book) {
-      const id_user = 1;
 
       this.panier.splice(this.panier.indexOf(book), 1);
-      axios.delete(`http://localhost:3000/api/${id_user}/${book.id}`);
+      axios.delete(`http://localhost:3000/api/${this.session.userid}/${book.id}`);
       this.bibli = []
       this.fetchPanier();
       console.log(`${book.titre} retiré du panier`);
@@ -127,7 +129,6 @@ export default {
 
     borrow(){
 
-      const id_user = 1;
 
       console.log(this.panier);
 
@@ -135,15 +136,13 @@ export default {
 
           const element = this.bibli[index];
 
-          axios.post(`http://localhost:3000/api/update/${id_user}/${element.id}/${element.quantite}`);
+          axios.post(`http://localhost:3000/api/update/${this.session.userid}/${element.id}/${element.quantite}`);
 
           console.log("borrowed", element.titre, element.quantite);
 
           console.log(this.bibli)
 
-          axios.delete(`http://localhost:3000/api/${id_user}/${element.id}`);
-
-          
+          axios.delete(`http://localhost:3000/api/${this.session.userid}/${element.id}`);
 
         }
 
@@ -155,6 +154,17 @@ export default {
       
 
 
+    },
+
+    syncSession(){
+      this.session.userid = sessionStorage.getItem('userid');
+      this.session.username = sessionStorage.getItem('username');
+      this.session.token = sessionStorage.getItem('token');
+      this.session.admin = sessionStorage.getItem('admin');
+
+      if (this.session.admin === 'true') {
+        this.administrator = true;
+      }
     }
 
   },
@@ -176,6 +186,7 @@ export default {
   },
 
   created() {
+    this.syncSession();
     this.fetchPanier();
   }
 
