@@ -16,7 +16,7 @@
     </div>
 
     <div id="zoneadd" v-show="admin">
-      <AddBookApp @newbook ="newcomics($event)" :session = "session"></AddBookApp>
+      <AddBookApp @newbook ="newcomics($event)" :session = "session" ></AddBookApp>
     </div>
 
     
