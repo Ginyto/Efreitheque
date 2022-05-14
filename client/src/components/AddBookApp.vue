@@ -34,6 +34,11 @@ export default {
 
     props: {
 
+      session : {
+        type : Object,
+        required : true
+      }
+
     },
 
     data() {
@@ -62,6 +67,10 @@ export default {
             this.previewing = true;
 
             const res = axios.post(`http://localhost:3000/api/addbook`,{}, {
+
+              headers: {
+                authorization: this.session.token
+              },
               
               params : {
 

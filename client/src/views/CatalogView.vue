@@ -16,7 +16,7 @@
     </div>
 
     <div id="zoneadd" v-show="admin">
-      <AddBookApp @newbook ="newcomics($event)"></AddBookApp>
+      <AddBookApp @newbook ="newcomics($event)" :session = "session"></AddBookApp>
     </div>
 
     
@@ -128,6 +128,10 @@ export default {
       console.log(book.id)
       
       axios.delete(`http://localhost:3000/api/deletebook`, {
+
+        headers: {
+          authorization: this.session.token
+        },
         
         params : {
           idbook : book.id

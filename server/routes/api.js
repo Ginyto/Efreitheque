@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const privateKey = require('../auth/private_key');
+const privateKey = require('../auth/private_key')
 const auth = require('../auth/auth');
 
 const sequelize = require('../sequelize')
