@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 
 
@@ -10,23 +9,13 @@ const PORT = process.env.PORT || 3000;
 const apirest = require('./routes/api.js');
 
 
-
-
-
-
-
 app.use(cors());
 app.use('/api', apirest);
-app.use(bodyParser.json());
-
-
 
 
 app.get('/', (req, res) => {
     res.send('This is the backend of the project');
 });
-
-
 
 
 
