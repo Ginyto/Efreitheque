@@ -1,5 +1,11 @@
 <template>
 
+  <nav>
+    <router-link to="/" @click="logout()">Log out</router-link> | |
+    <router-link to="/catalog">Catalog</router-link> | |
+    <router-link to="/cart">Cart</router-link> 
+  </nav>
+
   <div id="emprunt" v-show="plenty">
     <h1>What we got here ?</h1>
 
@@ -165,6 +171,16 @@ export default {
       if (this.session.admin === 'true') {
         this.administrator = true;
       }
+    },
+
+    logout(){
+      alert(`See you soon 😄 ${this.session.username}`);
+      this.session.userid = 0
+      this.session.username = ''
+      this.session.token = ''
+      this.session.admin = false
+
+      sessionStorage.clear();
     }
 
   },
@@ -186,8 +202,18 @@ export default {
   },
 
   created() {
+
     this.syncSession();
-    this.fetchPanier();
+
+    console.log(this.session);
+
+    if (this.session.userid === null) {
+      alert('You are not logged in');
+      router.push('/');
+    }else{
+      this.fetchPanier();
+    }
+    
   }
 
 }

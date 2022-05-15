@@ -1,5 +1,11 @@
 <template>
 
+  <nav>
+    <router-link to="/" @click="logout()">Log out</router-link> | |
+    <router-link to="/catalog">Catalog</router-link> | |
+    <router-link to="/cart">Cart</router-link> 
+  </nav>
+
   <div class="bookzone">
 
     <div id="header">
@@ -54,6 +60,7 @@ const axios = require('axios');
 
 import BookApp from "../components/BookApp.vue"
 import AddBookApp from "@/components/AddBookApp.vue";
+import router from '../router/index.js'
 
 
 export default {
@@ -93,14 +100,17 @@ export default {
   methods: {
 
     async fetchData() {
-      const response = await axios.get(`http://localhost:3000/api/book`, {
+      await axios.get(`http://localhost:3000/api/book`, {
         
-        headers: {
-          authorization: this.session.token
-        }})
-      
-
-      this.bibli = response.data.livres
+          headers: {
+            authorization: this.session.token
+          }
+        
+        }).then(response => {
+          this.bibli = response.data.livres;
+        }).catch(error => {
+          console.log(error);
+        });
 
     },
 
@@ -181,24 +191,48 @@ export default {
     },
 
     syncSession(){
-      this.session.userid = sessionStorage.getItem('userid');
-      this.session.username = sessionStorage.getItem('username');
-      this.session.token = sessionStorage.getItem('token');
-      this.session.admin = sessionStorage.getItem('admin');
+        this.session.userid = sessionStorage.getItem('userid');
+        this.session.username = sessionStorage.getItem('username');
+        this.session.token = sessionStorage.getItem('token');
+        this.session.admin = sessionStorage.getItem('admin');
 
-      if (this.session.admin === 'true') {
-        this.administrator = true;
-      }
-    }
+        if (this.session.admin === 'true') {
+          this.administrator = true;
+        }
+        
+      },
+
+    logout(){
+      alert(`See you soon 😄 ${this.session.username}`);
+      this.session.userid = 0
+      this.session.username = ''
+      this.session.token = ''
+      this.session.admin = false
+
+      sessionStorage.clear();
+    },
 
   },
 
   created() {
-    this.syncSession();
-    this.fetchData();
-  },
 
+    this.syncSession();
+
+    console.log(this.session);
+
+    if (this.session.userid === null) {
+      alert('You are not logged in');
+      router.push('/');
+    }else{
+      this.fetchData();
+    }
+    
+  }
+      
+      
 }
+
+
 
 </script>
 
