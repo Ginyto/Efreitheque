@@ -12,7 +12,7 @@ const { Livre } = require('../sequelize')
 const { User } = require('../sequelize')
 const { Panier } = require('../sequelize')
 
-//sequelize.syncDB()
+sequelize.syncDB()
 
 
 
